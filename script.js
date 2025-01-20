@@ -7,15 +7,15 @@ add, subtract, multiply, divide
 
 */
 
-const add = '+', subtract = '-', multiply = 'x', divide = '/';
+const add = '+', subtract = '-', multiply = '×', divide = '÷';
 
-function addition(num1, num2) {return num1 + num2;}
+function addition(num1, num2) { return num1 + num2; }
 
-function subtraction(num1, num2) {return num1 - num2;}
+function subtraction(num1, num2) { return num1 - num2; }
 
-function multiplication(num1, num2) {return num1 * num2;}
+function multiplication(num1, num2) { return num1 * num2; }
 
-function division(num1, num2) {return num2 === 0 ? 'Math Error: Division by zero' : num1 / num2;}
+function division(num1, num2) { return num2 === 0 ? 'Math Error: Division by zero' : num1 / num2; }
 
 function operate(num1, operand, num2) {
     switch (operand) {
@@ -30,4 +30,5 @@ function operate(num1, operand, num2) {
     }
 }
 
-console.log(operate(2, '/', 0));
+console.log(operate(2, '÷', 0));
+
