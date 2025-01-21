@@ -7,12 +7,15 @@ const allButtons = [
     'OT', '0', '.', '='
 ];
 
-let A = 0;
+let A = null;
 let operation = null;
 let B = null;
 
-function allClear() {
+function clearAll() {
     display.value = '';
+    A = null;
+    operation = null;
+    B = null;
 }
 
 const operationButtons = ['÷', '×', '-', '+', '='];
@@ -41,11 +44,34 @@ for (let i = 0; i < allButtons.length; i++) {
 
     button.addEventListener('click', () => {
         if (operationButtons.includes(value)) {
-
+            if (value === '=') {
+                if (A !== null) {
+                    B = display.value;
+                    let numA = Number(A);
+                        let numB = Number(B);
+                    if (operation === '+') {
+                        display.value = numA + numB;
+                    }
+                    else if (operation === '-') {
+                        display.value = numA - numB;
+                    }
+                    else if (operation === '÷') {
+                        display.value = numA / numB;
+                    }
+                    else if (operation === '×') {
+                        display.value = numA * numB;
+                    }
+                }
+            }
+            else {
+                operation = value;
+                A = display.value;
+                display.value = '';
+            }
         }
         else if (topButtons.includes(value)) {
             if (value === 'AC') {
-                allClear();
+                clearAll();
             }
             else if (value === '+/-') {
                 display.value *= -1;
