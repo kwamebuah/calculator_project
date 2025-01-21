@@ -11,13 +11,15 @@ let A = 0;
 let operation = null;
 let B = null;
 
+function allClear() {
+    display.value = '';
+}
+
 const operationButtons = ['÷', '×', '-', '+', '='];
 const topButtons = ['AC', '+/-', '%'];
 
 const buttonArea = document.querySelector('.keys');
 const display = document.querySelector('.display');
-
-display.value = '0';
 
 for (let i = 0; i < allButtons.length; i++) {
     let value = allButtons[i];
@@ -42,13 +44,22 @@ for (let i = 0; i < allButtons.length; i++) {
 
         }
         else if (topButtons.includes(value)) {
-
+            if (value === 'AC') {
+                allClear();
+            }
+            else if (value === '+/-') {
+                display.value *= -1;
+            }
+            else {
+                display.value = Number(display.value / 100);
+            }
         }
         else {
             if (value === '.') {
-
                 if (!display.value.includes(value)) {
-
+                    if (display.value === '') {
+                        display.value = '0';
+                    }
                     display.value += value;
                 }
             }
