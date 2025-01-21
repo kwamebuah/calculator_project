@@ -51,7 +51,7 @@ for (let i = 0; i < allButtons.length; i++) {
                 display.value *= -1;
             }
             else {
-                display.value = Number(display.value / 100);
+                display.value = Number(display.value) / 100;
             }
         }
         else {
