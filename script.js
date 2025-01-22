@@ -8,14 +8,41 @@ const allButtons = [
 ];
 
 let A = null;
-let operation = null;
+let operator = null;
 let B = null;
+let tempOperator = null;
+let equalSignPressed = false;
 
 function clearAll() {
     display.value = '';
     A = null;
-    operation = null;
+    operator = null;
     B = null;
+    tempOperator = null;
+    equalSignPressed = false;
+}
+
+function calculate() {
+    B = display.value;
+    let numA = Number(A);
+    let numB = Number(B);
+    if (operator === '+') {
+        display.value = numA + numB;
+    }
+    else if (operator === '-') {
+        display.value = numA - numB;
+    }
+    else if (operator === '÷') {
+        if (numB === 0) {
+            display.value = 'Error. Press AC';
+        }
+        else {
+            display.value = numA / numB;
+        }
+    }
+    else if (operator === '×') {
+        display.value = numA * numB;
+    }
 }
 
 const operationButtons = ['÷', '×', '-', '+', '='];
@@ -46,27 +73,29 @@ for (let i = 0; i < allButtons.length; i++) {
         if (operationButtons.includes(value)) {
             if (value === '=') {
                 if (A !== null) {
-                    B = display.value;
-                    let numA = Number(A);
-                        let numB = Number(B);
-                    if (operation === '+') {
-                        display.value = numA + numB;
-                    }
-                    else if (operation === '-') {
-                        display.value = numA - numB;
-                    }
-                    else if (operation === '÷') {
-                        display.value = numA / numB;
-                    }
-                    else if (operation === '×') {
-                        display.value = numA * numB;
+                    // Check to ensure calculation does not follow an operator. Otherwise will result in Null/NaN
+                    if (!operationButtons.includes(display.value)) {
+                        calculate();
+                        equalSignPressed = true;
                     }
                 }
             }
             else {
-                operation = value;
-                A = display.value;
-                display.value = '';
+                if (equalSignPressed === true) {
+                    equalSignPressed = false;
+                }
+                if (A === null && operator === null) {
+                    A = display.value;
+                    operator = value;
+                    display.value = value;
+                }
+                // Make sure to evaluate no more than a single pair of numbers at at time
+                else if (A !== null && operator !== null) {
+                    tempOperator = value;
+                    calculate();
+                    A = display.value;
+                    operator = tempOperator;
+                }
             }
         }
         else if (topButtons.includes(value)) {
@@ -90,10 +119,21 @@ for (let i = 0; i < allButtons.length; i++) {
                 }
             }
             else if (value === 'OT') {
-
             }
             else {
-                if ((display.value[0] === '0') && (display.value[1] !== '.')) {
+                if (equalSignPressed === true) {
+                    clearAll();
+                    display.value += value;
+                }
+                else if (operator !== null) {
+                    display.value = '';
+                    display.value += value;
+                }
+                else if ((display.value[0] === '0') && (display.value[1] !== '.')) {
+                    display.value = '';
+                    display.value += value;
+                }
+                else if (operationButtons.some(i => i === display.value)) {
                     display.value = '';
                     display.value += value;
                 }
