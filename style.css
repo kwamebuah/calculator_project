@@ -16,6 +16,17 @@
 
 .header {
     display: flex;
+    flex-direction: column;
+}
+
+.small-display {
+    text-align: right;
+    height: 60px;
+    background-color: #2f2f2f;
+    color: #bababa;
+    border: none;
+    font-size: 1rem;
+    padding: 0 1rem;
 }
 
 .display {

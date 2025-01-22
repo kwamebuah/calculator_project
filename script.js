@@ -15,6 +15,7 @@ let equalSignPressed = false;
 
 function clearAll() {
     display.value = '';
+    smallDisplay.value = '';
     A = null;
     operator = null;
     B = null;
@@ -50,6 +51,7 @@ const topButtons = ['AC', '+/-', '%'];
 
 const buttonArea = document.querySelector('.keys');
 const display = document.querySelector('.display');
+const smallDisplay = document.querySelector('.small-display');
 
 for (let i = 0; i < allButtons.length; i++) {
     let value = allButtons[i];
@@ -77,6 +79,7 @@ for (let i = 0; i < allButtons.length; i++) {
                     if (!operationButtons.includes(display.value)) {
                         calculate();
                         equalSignPressed = true;
+                        smallDisplay.value = `${A} ${operator} ${B} = `;
                     }
                 }
             }
@@ -88,13 +91,18 @@ for (let i = 0; i < allButtons.length; i++) {
                     A = display.value;
                     operator = value;
                     display.value = value;
+                    smallDisplay.value = `${A} ${operator}`;
                 }
                 // Make sure to evaluate no more than a single pair of numbers at at time
                 else if (A !== null && operator !== null) {
-                    tempOperator = value;
-                    calculate();
-                    A = display.value;
-                    operator = tempOperator;
+                    // Check to ensure calculation does not follow an operator. Otherwise will result in Null/NaN
+                    if (!operationButtons.includes(display.value)) {
+                        tempOperator = value;
+                        calculate();
+                        A = display.value;
+                        operator = tempOperator;
+                        smallDisplay.value = `${A} ${operator}`;
+                    }
                 }
             }
         }
