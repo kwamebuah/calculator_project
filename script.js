@@ -12,6 +12,7 @@ let operator = null;
 let B = null;
 let tempOperator = null;
 let equalSignPressed = false;
+let operatorPressed = false;
 
 function clearAll() {
     display.value = '';
@@ -74,6 +75,7 @@ for (let i = 0; i < allButtons.length; i++) {
     button.addEventListener('click', () => {
         if (operationButtons.includes(value)) {
             if (value === '=') {
+                operatorPressed = false;
                 if (A !== null) {
                     // Check to ensure calculation does not follow an operator. Otherwise will result in Null/NaN
                     if (!operationButtons.includes(display.value)) {
@@ -86,30 +88,33 @@ for (let i = 0; i < allButtons.length; i++) {
                 }
             }
             else {
-                if (equalSignPressed) {
-                    equalSignPressed = false;
-                    operator = value;
-                    A = display.value;
-                    smallDisplay.value = `${A} ${operator}`;
-                }
-                else if (A === null && operator === null) {
-                    equalSignPressed = false;
-                    A = display.value;
-                    operator = value;
-                    display.value = value;
-                    smallDisplay.value = `${A} ${operator}`;
-                }
-                // Make sure to evaluate no more than a single pair of numbers at at time
-                else if (A !== null && operator !== null) {
-                    // Check to ensure calculation does not follow an operator. Otherwise will result in Null/NaN
-                    if (!operationButtons.includes(display.value)) {
-                        tempOperator = value;
-                        calculate();
+                // Make sure pressing operator in succession does not trigger calucations
+                if (!operatorPressed) {
+                    if (equalSignPressed) {
+                        equalSignPressed = false;
+                        operator = value;
                         A = display.value;
-                        operator = tempOperator;
                         smallDisplay.value = `${A} ${operator}`;
                     }
+                    else if (A === null && operator === null) {
+                        A = display.value;
+                        operator = value;
+                        display.value = value;
+                        smallDisplay.value = `${A} ${operator}`;
+                    }
+                    // Make sure to evaluate no more than a single pair of numbers at at time
+                    else if (A !== null && operator !== null) {
+                        // Check to ensure calculation does not follow an operator. Otherwise will result in Null/NaN
+                        if (!operationButtons.includes(display.value)) {
+                            tempOperator = value;
+                            calculate();
+                            A = display.value;
+                            operator = tempOperator;
+                            smallDisplay.value = `${A} ${operator}`;
+                        }
+                    }
                 }
+                operatorPressed = true;
             }
         }
         else if (topButtons.includes(value)) {
@@ -135,6 +140,7 @@ for (let i = 0; i < allButtons.length; i++) {
             else if (value === 'OT') {
             }
             else {
+                operatorPressed = false;
                 if (equalSignPressed === true) {
                     clearAll();
                     display.value += value;
