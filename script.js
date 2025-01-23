@@ -4,7 +4,7 @@ const allButtons = [
     '7', '8', '9', '×',
     '4', '5', '6', '-',
     '1', '2', '3', '+',
-    'OT', '0', '.', '='
+    'DEL', '0', '.', '='
 ];
 
 const operationButtons = ['÷', '×', '-', '+', '='];
@@ -138,7 +138,8 @@ for (let i = 0; i < allButtons.length; i++) {
                     display.value += value;
                 }
             }
-            else if (value === 'OT') {
+            else if (value === 'DEL') {
+                display.value = display.value.slice(0, (display.value.length - 1))
             }
             else {
                 if (equalSignPressed === true) {
