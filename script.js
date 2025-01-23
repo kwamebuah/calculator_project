@@ -86,10 +86,14 @@ for (let i = 0; i < allButtons.length; i++) {
                 }
             }
             else {
-                if (equalSignPressed === true) {
+                if (equalSignPressed) {
                     equalSignPressed = false;
+                    operator = value;
+                    A = display.value;
+                    smallDisplay.value = `${A} ${operator}`;
                 }
-                if (A === null && operator === null) {
+                else if (A === null && operator === null) {
+                    equalSignPressed = false;
                     A = display.value;
                     operator = value;
                     display.value = value;
