@@ -7,6 +7,13 @@ const allButtons = [
     'OT', '0', '.', '='
 ];
 
+const operationButtons = ['÷', '×', '-', '+', '='];
+const topButtons = ['AC', '+/-', '%'];
+
+const buttonArea = document.querySelector('.keys');
+const display = document.querySelector('.display');
+const smallDisplay = document.querySelector('.small-display');
+
 let A = null;
 let operator = null;
 let B = null;
@@ -46,13 +53,6 @@ function calculate() {
         display.value = numA * numB;
     }
 }
-
-const operationButtons = ['÷', '×', '-', '+', '='];
-const topButtons = ['AC', '+/-', '%'];
-
-const buttonArea = document.querySelector('.keys');
-const display = document.querySelector('.display');
-const smallDisplay = document.querySelector('.small-display');
 
 for (let i = 0; i < allButtons.length; i++) {
     let value = allButtons[i];
