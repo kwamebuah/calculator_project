@@ -77,9 +77,11 @@ for (let i = 0; i < allButtons.length; i++) {
                 if (A !== null) {
                     // Check to ensure calculation does not follow an operator. Otherwise will result in Null/NaN
                     if (!operationButtons.includes(display.value)) {
-                        calculate();
-                        equalSignPressed = true;
-                        smallDisplay.value = `${A} ${operator} ${B} = `;
+                        if (!equalSignPressed) {
+                            calculate();
+                            equalSignPressed = true;
+                            smallDisplay.value = `${A} ${operator} ${B} = `;
+                        }
                     }
                 }
             }
