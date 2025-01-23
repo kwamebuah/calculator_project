@@ -29,6 +29,7 @@ function clearAll() {
     B = null;
     tempOperator = null;
     equalSignPressed = false;
+    operatorPressed = false;
 }
 
 function calculate() {
@@ -140,12 +141,11 @@ for (let i = 0; i < allButtons.length; i++) {
             else if (value === 'OT') {
             }
             else {
-                operatorPressed = false;
                 if (equalSignPressed === true) {
                     clearAll();
                     display.value += value;
                 }
-                else if (operator !== null) {
+                else if (operatorPressed) {
                     display.value = '';
                     display.value += value;
                 }
@@ -160,6 +160,7 @@ for (let i = 0; i < allButtons.length; i++) {
                 else {
                     display.value += value;
                 }
+                operatorPressed = false;
             }
         }
     });
